@@ -22,12 +22,6 @@ public class main{
       System.out.println("input error:" + e.getMessage());
     }
 
-    //System.out.println("str ->" + str);
-
-    //if (str.equals("s")){
-      /*
-      //select operation
-      */
     Formula fml = new Formula();
     String operation = null;
     int answer = -1;
@@ -35,7 +29,7 @@ public class main{
     int rightQ = -1;
 
     operation = fml.getOperation();
-    answer = fml.getAnswer("/");
+    answer = fml.getAnswer("+");
 
     //System.out.println("operation -> " + operation);
     System.out.println("answer -> " + answer);
@@ -81,6 +75,9 @@ public class main{
       }
     }
 
+    /*
+    * get Answer
+    */
     public int getAnswer(String opeName){
       int min = -1;
       int max = -1;
@@ -110,9 +107,12 @@ public class main{
           min = 2;
           max = 49;
           return getRandom(min, max);
+        
+        default:
+          System.out.println("error(getOperationName)");
+          return -1;
 
         }
-        return -1;
     }
 
     private int getRandom(int min,int max){
