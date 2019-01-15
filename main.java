@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.Random;
+import java.util.ArrayList;
 
 public class main{
   public static void main(String[] args){
@@ -29,10 +30,15 @@ public class main{
     int rightQ = -1;
 
     operation = fml.getOperation();
-    answer = fml.getAnswer("+");
+    //operation = "/";
+    answer = fml.getAnswer(operation);
+    //answer = 4;
+    leftQ = fml.getLeft(operation, answer);
+
 
     //System.out.println("operation -> " + operation);
     System.out.println("answer -> " + answer);
+    System.out.println("leftQ -> " + leftQ);
 
     //}else{
     //System.out.println("waiting... please put s key!!");
@@ -107,7 +113,51 @@ public class main{
           min = 2;
           max = 49;
           return getRandom(min, max);
-        
+
+        default:
+          System.out.println("error(getOperationName)");
+          return -1;
+
+        }
+    }
+
+    private int getLeft(String opeName, int ans){
+      int min = -1;
+      int max = -1;
+      switch (opeName){
+        case OPE_ADD_NAME:
+          min = 1;
+          max = ans - min;
+          return  getRandom(min, max);
+
+        case OPE_SUB_NAME:
+          min = ans + 1;
+          max = 99;
+          return getRandom(min, max);
+
+        case OPE_MUL_NAME:
+          ArrayList<Integer> divisor = new ArrayList<Integer>();
+          //var divisor = []
+          for (int i = 2; i <= ans / 2; i++){
+            if (ans % i == 0){
+              divisor.add(i);
+            }
+          }
+          //System.out.println("divisor ->" + divisor);
+          //console.log(divisor);
+          return divisor.get(getRandom(0, divisor.size() - 1));
+
+        case OPE_DIV_NAME:
+          ArrayList<Integer> multiple = new ArrayList<Integer>();
+          int maxAns;
+          maxAns = 99;
+
+          for (int i = 2; i * ans <= maxAns; i++){
+            multiple.add(i * ans);
+          }
+          System.out.println("multiple ->" + multiple);
+          return multiple.get(getRandom(0, multiple.size() - 1));
+
         default:
           System.out.println("error(getOperationName)");
           return -1;
